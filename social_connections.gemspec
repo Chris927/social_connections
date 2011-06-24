@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Chris"]
   s.email       = ["christian.oloff+gem@gmail.com"]
   s.homepage    = "https://sites.google.com/site/socialconnections7/"
-  s.summary     = %q{The idea is to provide pluggable social connections, activities and a method to digest those activities (e.g. in daily emails).}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{Social connections for ActiveRecord.}
+  s.description = %q{The idea is to provide pluggable social connections, activities and a method to digest those activities (e.g. in daily emails).}
 
   s.rubyforge_project = "social_connections"
 

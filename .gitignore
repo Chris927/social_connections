@@ -1,5 +1,6 @@
 .bundle
 *.sqlite3
+db/social_connections_plugin.sqlite3
 *.log
 tmp/
 .*.swp

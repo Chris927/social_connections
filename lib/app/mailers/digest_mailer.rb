@@ -1,6 +1,6 @@
 class DigestMailer < ActionMailer::Base
 
-  default :from => 'from@example.com'
+  default :from => 'from@example.com' # TODO: remove or make configurable?
 
   append_view_path(File.dirname(__FILE__) + '../../views')
 

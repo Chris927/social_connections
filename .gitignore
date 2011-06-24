@@ -2,6 +2,7 @@
 *.sqlite3
 db/social_connections_plugin.sqlite3
 *.log
+test/debug.log
 tmp/
 .*.swp
 social_connections*.gem

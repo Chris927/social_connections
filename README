@@ -1,0 +1,57 @@
+= SocialConnections
+
+Enables
+
+* Social connections between people and things: list of friends, things you like, stuff you recommend.
+* Activities on those things which are recorded for later processing
+* Digest mechanism to digest those activities, e.g. for daily digest emails.
+
+This gem is work in progress and my playground, and currently my playground, don't use it!
+
+
+== Setup
+
+Install as a gem
+
+  gem install social_connections
+
+or reference in your Gemfile
+
+  gem 'social_connections'
+
+and run
+
+  bundle install
+
+
+Next, you need to add the migration. This works currently by executing
+
+  rake db:migrate:social_connections
+
+which adds the required tables.
+
+Now, every model that is supposed to act as a connectable thing (so that friends can connect
+other friend or users can like books), add to all those models
+
+  acts_as_connectable :verbs => [ :likes, :recommends, :comments ]
+
+where the verbs specify what you want to allow those connectables to do to other connectables.
+See the example below, that may make it clearer.
+
+== Example
+
+TODO: Example goes here.
+
+
+== How to run the Tests (in the gem itself, not in your Rails app)
+
+Run test in ./test:
+
+  rake
+
+Run specs in ./spec:
+
+  rspec spec
+
+
+Copyright (c) 2011 Chris Oloff, released under the MIT license

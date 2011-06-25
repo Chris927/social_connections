@@ -5,6 +5,10 @@ module SocialConnections
   end
 
   module ClassMethods
+    # Enables an ActiveRecord model to act as a connectable.
+    # Recognized options:
+    # * :verbs - specify a list of constants recognized as verbs.
+    #   If none given, :likes is the only default verb.
     def acts_as_connectable(options = {})
       cattr_accessor :acts_as_connectable_options
       send :acts_as_connectable_options=, options

@@ -43,7 +43,6 @@ module SocialConnections
     end
 
     def method_missing(name, *args)
-      puts "BLABLA"
       if acts_as_connectable_verbs.include? name
         verb = name
         object = args[0]

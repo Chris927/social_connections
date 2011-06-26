@@ -38,12 +38,25 @@ module SocialConnections
       acts_as_connectable_options[:verbs] || [ :likes ]
     end
 
+    def acts_as_connectable_verb_questions
+      acts_as_connectable_verbs.collect {|v| (v.to_s + '?').to_sym }
+    end
+
     def method_missing(name, *args)
+      puts "BLABLA"
       if acts_as_connectable_verbs.include? name
         verb = name
         object = args[0]
         options = args[1] || {}
         create_activity(verb, object, options)
+      elsif acts_as_connectable_verb_questions.include? name
+        verb = name[0..-2]
+        object = args[0]
+        SocialActivity.exists(self, verb, object)
+      elsif verbs.collect {|v| (v.to_s + '_by_count').to_sym }.include? name
+        verb = name.to_s.split(/_by_count/)
+        object = self
+        SocialActivity.objects_by_verb_count(object, verb)
       else
         super
       end
@@ -53,6 +66,10 @@ module SocialConnections
 
     def create_activity(verb, object, options = {})
       SocialActivity.create_activities(self, verb, object, options)
+    end
+
+    def verbs
+      acts_as_connectable_verbs
     end
 
   end

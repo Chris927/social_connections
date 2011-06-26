@@ -1,5 +1,6 @@
 
 ENV['RAILS_ROOT'] ||= File.dirname(__FILE__) + '/../../../..'
+ENV['TEST'] = 'TRUE'
 
 require 'rubygems'
 require 'test/unit'

@@ -34,4 +34,14 @@ class SocialActivity < ActiveRecord::Base
     SocialActivity.where('owner_id = ? and owner_type = ? and unseen = ?', for_whom.id, for_whom.class.name, true)
   end
 
+  def self.exists(subject, verb, object)
+    SocialActivity.where('subject_id = ? and subject_type = ? and verb = ? and target_id = ? and target_type = ?',
+                        subject.id, subject.class.name, verb, object.id, object.class.name).exists?
+  end
+
+  def self.objects_by_verb_count(object, verb)
+    SocialActivity.where('target_id = ? and target_type = ? and verb = ? and owner_id = ? and owner_type = ?',
+                         object.id, object.class.name, verb, object.id, object.class.name).count
+  end
+
 end

@@ -31,7 +31,7 @@ Next, you need to add the migration. This works currently by executing
 which adds the required tables.
 
 Now, every model that is supposed to act as a connectable thing (so that friends can connect
-other friend or users can like books), add to all those models
+other friend or users can like books, or similar), add to all those models
 
   acts_as_connectable :verbs => [ :likes, :recommends, :comments ]
 
@@ -40,7 +40,51 @@ See the example below, that may make it clearer.
 
 == Example
 
-TODO: Example goes here.
+Users can like books, and they can comment on books.
+
+Enable model User to be connected to other users and things (books, in this example):
+
+  acts_as_connectable :verbs => [ :likes, :comments ]
+
+Given a user `u` and a book `b`, you can now say
+
+  u.likes(b)
+
+and
+
+  u.comments(b, :comment => 'awesome book!')
+
+. This creates activities for the user and the book. These activities can be
+queried:
+
+  b.likes_by_count
+
+Gives the number of users (or other 'connectables') that liked this book. Same for
+
+  b.comments_by_count
+
+. For more examples, see the spec files.
+
+
+=== Controllers for Activities
+
+Assuming that `current_user` gives you the currently logged in user, a controller
+responding to a 'like' button could look as follows:
+
+  class CurrentUserLikesController < ApplicationController
+    def likes_book
+      @book = Book.find(params[:id])
+      current_user.likes(@book) unless current_user.likes?(@book)
+    end
+  end
+
+A route in config/routes.rb might then look as follows:
+
+  match '/current_user_likes_book/:id' => 'current_user_likes#likes_book', :as => :current_user_likes_book
+
+The view (e.g. `app/views/books/show.html.erb`) may then contain the following 'like' button:
+
+  <%= link_to('I like this', current_user_likes_book_path(@book) %>
 
 
 == How to run the Tests (in the gem itself, not in your Rails app)

@@ -21,6 +21,20 @@ describe "Subjects" do
     lambda { @sub.suggests(@obj) }.should raise_error
   end
 
+  it "knows if subject/verb/object occured before" do
+    @sub.likes @obj
+    @sub.likes?(@obj).should be_true
+    @sub.recommends?(@obj).should be_false
+    @sub.recommends @obj
+    @sub.recommends?(@obj).should be_true
+  end
+
+  it "counts by how many an object is liked by (or any other verb)" do
+    @obj.likes_by_count.should eql(0)
+    @sub.likes @obj
+    @obj.likes_by_count.should eql(1)
+  end
+
   it "allows options on activities (e.g. a comment)" do
     activities = @sub.comments(@obj, :comment => 'This is a silly comment on Tom')
     activities[0].options['comment'].should eql('This is a silly comment on Tom')

@@ -3,10 +3,11 @@
 require 'social_connections/acts_as_connectable'
 require 'social_connections/social_aggregator'
 
-class SocialConnectionsTasks < Rails::Railtie
-  rake_tasks do
-    puts "defining rake migration task for social_connections..."
-    Dir[File.join(File.dirname(__FILE__),'tasks/*.rake')].each { |f| load f }
+unless ENV['TEST'] = 'TRUE'
+  class SocialConnectionsTasks < Rails::Railtie
+    rake_tasks do
+      Dir[File.join(File.dirname(__FILE__),'tasks/*.rake')].each { |f| load f }
+    end
   end
 end
 

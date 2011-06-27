@@ -13,9 +13,7 @@ describe "Aggregation" do
     @tim.comments(@tom, :comment => "This is cool")
     feed_tim = SocialConnections.aggregate(@tim)
     feed_tim.activities.count.should be_>(1)
-    feed_tim.activities.each {|a| puts "For Tim: #{a.subject} #{a.verb} #{a.target}, options=#{a.options}"}
     feed_tom = SocialConnections.aggregate(@tom)
-    feed_tom.activities.each {|a| puts "For Tom: #{a.subject} #{a.verb} #{a.target}, options=#{a.options}"}
     feed_tom.activities.count.should be_>(1)
   end
 

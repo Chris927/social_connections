@@ -42,7 +42,19 @@ def load_schema
     raise "No DB Adapter selected. Pass the DB= option to pick one, or install Sqlite or Sqlite3."
   end
 
-  ActiveRecord::Base.establish_connection(config[db_adapter])
-  load(File.dirname(__FILE__) + "/schema.rb")
+  # helper needed here only
+  def capture_stdout &block
+    real_out, $stdout = $stdout, StringIO.new
+    yield
+    $stdout.string
+  ensure
+    $stdout = real_out
+  end
+
+  capture_stdout do # we ignore stdout for this, it pollutes the output
+    ActiveRecord::Base.establish_connection(config[db_adapter])
+    load(File.dirname(__FILE__) + "/schema.rb")
+  end
+
 end
 

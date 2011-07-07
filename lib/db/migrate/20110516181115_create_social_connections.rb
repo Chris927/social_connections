@@ -5,6 +5,7 @@ class CreateSocialConnections < ActiveRecord::Migration
       t.string :source_type
       t.integer :target_id
       t.string :target_type
+      t.timestamps
     end
     create_table :social_activities do |t|
       t.integer :owner_id
@@ -16,6 +17,7 @@ class CreateSocialConnections < ActiveRecord::Migration
       t.string :verb
       t.text :options_as_json
       t.boolean :unseen, :default => true
+      t.timestamps
     end
   end
   def self.down

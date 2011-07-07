@@ -4,6 +4,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string :source_type
     t.integer :target_id
     t.string :target_type
+    t.timestamps
   end
   create_table :social_activities, :force => true do |t|
     t.integer :owner_id
@@ -15,6 +16,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string :verb
     t.text :options_as_json
     t.boolean :unseen, :default => true
+    t.timestamps
   end
 
   # the 'connectables' table is for the tests

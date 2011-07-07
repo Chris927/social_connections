@@ -23,7 +23,9 @@ class ActsAsConnectableTest < ActiveSupport::TestCase
   end
 
   test "should allow adding connections" do
-    @connectable1.connect_to(@connectable2).save
+    assert @connectable1.connected_to?(@connectable2) == false
+    @connectable1.connect_to(@connectable2)
+    assert @connectable1.connected_to?(@connectable2) == true
     assert @connectable1.outgoing_social_connections.count == 1
     assert @connectable1.incoming_social_connections.count == 0
     assert @connectable2.outgoing_social_connections.count == 0

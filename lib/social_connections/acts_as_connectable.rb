@@ -31,7 +31,13 @@ module SocialConnections
       c = SocialConnection.new
       c.target = other
       c.source = self
+      c.save
       c
+    end
+
+    def connected_to?(other)
+      SocialConnection.where("source_id = ? and source_type = ? and target_id = ? and target_type = ?",
+                             self.id, self.class.name, other.id, other.class.name).exists?
     end
 
     def acts_as_connectable_verbs

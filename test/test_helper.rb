@@ -58,3 +58,6 @@ def load_schema
 
 end
 
+ActionMailer::Base.delivery_method = :file
+ActionMailer::Base.file_settings = { :location => 'tmp/mails' }
+ActionMailer::Base.raise_delivery_errors = true

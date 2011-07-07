@@ -8,6 +8,15 @@ class SocialActivity < ActiveRecord::Base
     JSON.parse options_as_json
   end
 
+  def to_s
+    "SocialActivity #{subject} #{verb} #{target} (owned by #{owner})"
+  end
+
+  def consume
+    self.unseen = false
+    self.save
+  end
+
   def self.create_activities(subject, verb, object, options = {})
     # TODO: we may want to delay this
     activities = []
@@ -31,7 +40,7 @@ class SocialActivity < ActiveRecord::Base
   end 
 
   def self.unseen_activities(for_whom)
-    SocialActivity.where('owner_id = ? and owner_type = ? and unseen = ?', for_whom.id, for_whom.class.name, true)
+    SocialActivity.where('owner_id = ? and owner_type = ? and unseen = ?', for_whom.id, for_whom.class.name, true).order("created_at DESC")
   end
 
   def self.exists(subject, verb, object)

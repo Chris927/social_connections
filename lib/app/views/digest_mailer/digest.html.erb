@@ -1,1 +1,27 @@
-<p>Hi, <%= @email %></p>
+<p>Note: This view serves as an example only, please set up your own
+view at app/views/digest_mailer/digest.html.erb</p>
+
+<p>Hi, <%= @feed.who %></p>
+
+<p>You have got <%= pluralize @feed.activities.count, 'activity' %> in total,
+and 
+<%= pluralize @feed.excluding_self.activities.count, 'activity' %> excluding your own activities.</p>
+
+<% @feed.excluding_self.by_verb.keys.each do |verb| %>
+  <p>All the <%= verb.to_s %> of those you are connected with:</p>
+  <ul>
+    <% @feed.excluding_self.by_verb[verb].each do |a| %>
+      <li><%= a.to_s %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<p>All activities, including your own ones:</p>
+<ul>
+  <% @feed.activities.each do |a| %>
+    <li><%= a.to_s %>, <%= time_ago_in_words a.created_at %> ago</li>
+  <% end %>
+</ul>
+
+<p>That's all for now...</p>
+

@@ -52,14 +52,14 @@ describe "Social Activities" do
 
   it "create activities for those connected to the subject" do
     mary = Connectable.create(:name => 'Mary')
-    mary.connect_to(@sub).save # mary is now connected to Tim
+    mary.connect_to(@sub) # mary is now connected to Tim
     activities = @sub.likes(@obj)
     activities.select {|a| a.owner == mary}.should_not be_empty # Mary gets an activity, because she's connected to Tim
   end
 
   it "do *not* create activities for those the subject is connected to" do
     mary = Connectable.create(:name => 'Mary')
-    @sub.connect_to(mary).save # Tim is now connected to Mary
+    @sub.connect_to(mary) # Tim is now connected to Mary
     activities = @sub.likes(@obj)
     # Mary does not get an activity,
     # because she's *not* connected to Tim (Tim is connected to Mary, though)
@@ -68,7 +68,7 @@ describe "Social Activities" do
 
   it "create activities for those connected to the object" do
     anne = Connectable.create(:name => 'Anne')
-    anne.connect_to(@obj).save
+    anne.connect_to(@obj)
     activities = @sub.likes(@obj)
     # Anne gets an activity
     activities.select {|a| a.owner == anne}.should_not be_empty
@@ -76,7 +76,7 @@ describe "Social Activities" do
 
   it "do *not* create an activity for those the subject is connected to" do
     anne = Connectable.create(:name => 'Anne')
-    @obj.connect_to(anne).save
+    @obj.connect_to(anne)
     activities = @sub.likes(@obj)
     # Anne does not get an activity
     activities.select {|a| a.owner == anne}.should be_empty

@@ -1,0 +1,14 @@
+PATH
+  remote: .
+  specs:
+    social_connections (0.0.6)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  social_connections!

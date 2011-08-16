@@ -6,3 +6,4 @@ test/debug.log
 tmp/
 .*.swp
 social_connections*.gem
+.rvmrc

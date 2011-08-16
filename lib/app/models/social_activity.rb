@@ -40,17 +40,23 @@ class SocialActivity < ActiveRecord::Base
   end 
 
   def self.unseen_activities(for_whom)
-    SocialActivity.where('owner_id = ? and owner_type = ? and unseen = ?', for_whom.id, for_whom.class.name, true).order("created_at DESC")
+    SocialActivity.where('owner_id = ? and owner_type = ? and unseen = ?',
+                         for_whom.id, for_whom.class.name,
+                         true).order("created_at DESC")
   end
 
   def self.exists(subject, verb, object)
-    SocialActivity.where('subject_id = ? and subject_type = ? and verb = ? and target_id = ? and target_type = ?',
-                        subject.id, subject.class.name, verb, object.id, object.class.name).exists?
+    SocialActivity.where('subject_id = ? and subject_type = ? and verb = ? ' +
+                         'and target_id = ? and target_type = ?',
+                         subject.id, subject.class.name, verb, object.id,
+                         object.class.name).exists?
   end
 
   def self.objects_by_verb_count(object, verb)
-    SocialActivity.where('target_id = ? and target_type = ? and verb = ? and owner_id = ? and owner_type = ?',
-                         object.id, object.class.name, verb, object.id, object.class.name).count
+    SocialActivity.where('target_id = ? and target_type = ? and verb = ? ' +
+                         'and owner_id = ? and owner_type = ?',
+                         object.id, object.class.name, verb, object.id,
+                         object.class.name).count
   end
 
 end

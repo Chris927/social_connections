@@ -1,4 +1,5 @@
 ActiveRecord::Schema.define(:version => 0) do
+  # TODO: not DRY: Same in lib/generators/social_connections/install/templates/
   create_table :social_connections, :force => true do |t|
     t.integer :source_id
     t.string :source_type

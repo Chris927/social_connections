@@ -26,11 +26,14 @@ and run
 	bundle install
 
 
-Next, you need to add the migration. This works currently by executing
+Next, you need to add the migration by using the install generator of the gem:
 
-	rake db:migrate:social_connections
+	rails g social_connections:install
 
-which adds the required tables.
+which adds the required migration(s). Doing a migration
+will generate the required tables:
+
+	rake db:migrate
 
 Now, every model that is supposed to act as a connectable thing (so that friends can connect
 other friend or users can like books, or similar), add to all those models

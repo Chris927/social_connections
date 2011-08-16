@@ -1,6 +1,5 @@
 class CreateSocialConnections < ActiveRecord::Migration
   def self.up
-    puts "Warning: Migrating via rake is deprecated for social_connections, use 'rails g social_connections:install' instead"
     create_table :social_connections do |t|
       t.integer :source_id
       t.string :source_type

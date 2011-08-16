@@ -103,5 +103,4 @@ Run specs in ./spec:
 
 	rspec spec
 
-
 Copyright (c) 2011 Chris Oloff, released under the MIT license

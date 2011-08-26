@@ -6,7 +6,7 @@ namespace :db do
     task :social_connections => :environment do
       ActiveRecord::Migration.verbose = true
       ActiveRecord::Migrator.migrate(File.join(File.dirname(__FILE__), '../db/migrate/'), ENV['VERSION'] ? ENV['VERSION'].to_i : nil)
-      ActiveSupport::Deprecation.warn "Migration via rake is deprecated, use 'rails generate social_connections:install' instead." # mhm, this doesn't display when migrating...
+      warn "Migration via rake is deprecated, use 'rails generate social_connections:install' instead."
       Rake::Task["db:schema:dump"].invoke if ActiveRecord::Base.schema_format == :ruby
     end
   end

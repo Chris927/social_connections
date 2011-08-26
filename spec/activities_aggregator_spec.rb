@@ -17,6 +17,16 @@ describe "Aggregation" do
     feed_tom.activities.count.should be_>(1)
   end
 
+  it "aggregates activities for 'passive' users" do
+    stalker = Connectable.create(:name => 'Tony', :email => 'tony@test.com')
+    stalker.connect_to(@tom)
+    aggregate = SocialConnections.aggregate(stalker)
+    aggregate.activities.count.should eq(0)
+    @tim.comments(@tom, :comment => 'Tony is listening...')
+    aggregate = SocialConnections.aggregate(stalker)
+    aggregate.activities.count.should eq(1)
+  end
+
   describe "When Tim and Tom interacted" do
 
     before(:each) do

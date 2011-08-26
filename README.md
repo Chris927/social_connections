@@ -60,8 +60,16 @@ and
 
 	u.comments(b, :comment => 'awesome book!')
 
-. This creates activities for the user and the book. These activities can be
-queried:
+. This creates activities for the user and the book. Activities are _only_ created for
+those connected to the subject and/or object of the activity--in the example, user `u`
+is the subject and book `b` is the object. A user `v` can connect to user `u` by saying
+
+	v.connect_to(u)
+
+. If this is issued before invoking `likes` and `comments` as above, user `v` 
+receives 2 activities.
+
+These activities can be queried:
 
 	b.likes_by_count
 

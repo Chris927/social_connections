@@ -12,7 +12,7 @@ require 'action_mailer'
 require File.dirname(__FILE__) + '/../init'
 
 class Connectable < ActiveRecord::Base
-  acts_as_connectable :verbs => [ :likes, :recommends, :comments ]
+  acts_as_connectable :verbs => [ :likes, :recommends, :comments, :follows ]
   def to_s
     "Connectable '#{self.name}'"
   end

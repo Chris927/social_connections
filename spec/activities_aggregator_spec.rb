@@ -3,7 +3,6 @@ require File.dirname(__FILE__) + '/../test/test_helper'
 describe "Aggregation" do
 
   before(:each) do
-    load_schema
     @tim = Connectable.create(:name => 'Tim', :email => 'tim@test.com')
     @tom = Connectable.create(:name => 'Tom', :email => 'tom@test.com')
   end

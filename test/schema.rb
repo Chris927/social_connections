@@ -1,4 +1,11 @@
 ActiveRecord::Schema.define(:version => 0) do
+
+  # TODO: very ugly and messy: Maybe at the beginning of a spec run
+  # drop the database and migrate-up via the template files?
+  require File.dirname(__FILE__) + '/../lib/generators/social_connections/install/templates/create_mute_and_curious_guests.rb'
+  CreateMuteAndCuriousGuests.migrate(:down)
+  CreateMuteAndCuriousGuests.migrate(:up)
+
   # TODO: not DRY: Same in lib/generators/social_connections/install/templates/
   create_table :social_connections, :force => true do |t|
     t.integer :source_id

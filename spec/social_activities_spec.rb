@@ -3,7 +3,6 @@ require File.dirname(__FILE__) + '/../test/test_helper'
 describe "Social Activities" do
 
   before(:each) do
-    load_schema
     @sub = Connectable.create(:name => 'Tim')
     @obj = Connectable.create(:name => 'Tom')
   end

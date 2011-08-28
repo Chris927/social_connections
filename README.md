@@ -80,7 +80,8 @@ Gives the number of users (or other 'connectables') that liked this book. Same f
 . For more examples, see the spec files.
 
 
-=== Controllers for Activities
+Controllers for Activities
+--------------------------
 
 Assuming that `current_user` gives you the currently logged in user, a controller
 responding to a 'like' button could look as follows:
@@ -101,7 +102,8 @@ The view (e.g. `app/views/books/show.html.erb`) may then contain the following '
 	<%= link_to('I like this', current_user_likes_book_path(@book) %>
 
 
-== How to run the Tests (in the gem itself, not in your Rails app)
+How to run the Tests (in the gem itself, not in your Rails app)
+--------------------
 
 Run test in ./test:
 

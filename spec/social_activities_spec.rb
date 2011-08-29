@@ -38,6 +38,25 @@ describe "Social Activities" do
 
   end
 
+  describe "when connected to both object and subject" do
+    before(:each) do
+      @stalker = Connectable.create(:name => 'Steve, the Stalker')
+      @stalker.connect_to(@sub)
+      @stalker.connect_to(@obj)
+    end
+    it "creates one activity, not two" do
+      activities = @sub.likes @obj
+      activities.select { |a| a.owner == @stalker }.count.should eql(1)
+    end
+    describe "when subject and object are identical" do
+      it "creates one activity, not two" do
+        activities = @sub.likes @sub
+        activities.select {|a| a.owner == @stalker}.count.should eql(1)
+      end
+    end
+  end
+
+
   it "allow options on activities (e.g. a comment)" do
     activities = @sub.comments(@obj, :comment => 'This is a silly comment on Tom')
     activities[0].options['comment'].should eql('This is a silly comment on Tom')

@@ -20,21 +20,24 @@ class SocialActivity < ActiveRecord::Base
   def self.create_activities(subject, verb, object, options = {})
     # TODO: we may want to delay this
     activities = []
-    [ subject, object ].each do |owner| # one activity for the subject, and one for the object
+    [ subject, object ].uniq.each do |owner| # one activity for the subject, and one for the object
       activities << SocialActivity.create(:owner => owner,
                                           :subject => subject,
                                           :verb => verb,
                                           :target => object,
                                           :options_as_json => options.to_json)
     end
-    [ subject, object ].each do |who| # for both subject and object...
-      who.incoming_social_connections.each do |connection|
-        activities << SocialActivity.create(:owner => connection.source, # ... an activity for each one connected
-                                            :subject => subject,
-                                            :verb => verb,
-                                            :target => object,
-                                            :options_as_json => options.to_json)
-      end
+    # TODO: ugly and hard to read code below, refactor!
+    who = []
+    [subject, object].uniq.each do |w|
+      who.concat(w.incoming_social_connections)
+    end
+    who.collect{|w| w.source}.uniq.each do |connection|
+      activities << SocialActivity.create(:owner => connection, # ... an activity for each one connected
+                                          :subject => subject,
+                                          :verb => verb,
+                                          :target => object,
+                                          :options_as_json => options.to_json)
     end
     activities
   end 

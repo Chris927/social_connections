@@ -8,12 +8,13 @@
     <% end %>
     <%= social_activity.verb %>
     <% if social_activity.target.blank? %>
-      (gone)>
+      (gone)
     <% else %>
       <%= render social_activity.target %>
     <% end %>
     <div class="when">
       <%= time_ago_in_words social_activity.created_at %>
+      ago
     </div>
   </div>
 <% else %>

@@ -1,0 +1,23 @@
+<li>
+<% if social_activity.options['template'].blank? %>
+  <div class="social-activity">
+    <% if social_activity.subject.nil? %>
+      (gone)
+    <% else %>
+      <%= render social_activity.subject %>
+    <% end %>
+    <%= social_activity.verb %>
+    <% if social_activity.target.blank? %>
+      (gone)>
+    <% else %>
+      <%= render social_activity.target %>
+    <% end %>
+    <div class="when">
+      <%= time_ago_in_words social_activity.created_at %>
+    </div>
+  </div>
+<% else %>
+  <%= render :partial => social_activity.options['template'],
+    :locals => { :social_activity => social_activity } %>
+<% end %>
+</li>

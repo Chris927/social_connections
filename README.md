@@ -7,8 +7,7 @@ Enables
 * Activities on those things which are recorded for later processing
 * Digest mechanism to digest those activities, e.g. for daily digest emails.
 
-This gem is work in progress and my playground, and currently my playground, don't use it!
-
+This gem is work in progress and my playground, use at own risk.
 
 Setup
 -----
@@ -24,7 +23,6 @@ or reference in your Gemfile
 and run
 
 	bundle install
-
 
 Next, you need to add the migration by using the install generator of the gem:
 
@@ -100,6 +98,37 @@ A route in config/routes.rb might then look as follows:
 The view (e.g. `app/views/books/show.html.erb`) may then contain the following 'like' button:
 
 	<%= link_to('I like this', current_user_likes_book_path(@book) %>
+
+
+Views
+-----
+
+A list of social activities can be rendered by 
+
+	<%= render @social_activities %>
+
+in a view. Thereby, '@social_activities' could have been assigned in a controller like this:
+
+	def show
+	  @user = User.find(params[:id])
+	  @social_activities = SocialConnections.aggregate(@user).activities
+	end
+
+Rendering uses a generic partial (part of the gem) which in turn renders the subject and
+target as partial, and the verb as text.
+If the subject is of type 'User', then
+you have to provide a partial in 'app/views/users/_user.html.erb' (if
+using erb). Check [Rails Guides on partials](http://guides.rubyonrails.org/layouts_and_rendering.html#using-partials)
+on details for this. A simple example for a '_user.html.erb' file is:
+
+	User <%= link_to user.name, user %>
+
+If you want to use your own template for rendering the SocialActivity, you can
+pass a reference to your template as an option when creating the activity:
+
+	u.comments(b, :comment => 'awesome book!', :template => 'social_activities/user_comments_user')
+
+For this, provide a partial at 'app/views/social_activities/_user_comments_user.html.erb'.
 
 
 How to run the Tests (in the gem itself, not in your Rails app)

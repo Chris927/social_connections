@@ -18,5 +18,11 @@ end
   ActiveSupport::Dependencies.autoload_once_paths.delete(path)
 end
 
+module SocialConnections
+  class Engine < Rails::Engine
+    paths["app/views"] = "lib/app/views"
+  end
+end
+
 path = File.join(File.dirname(__FILE__), 'tasks')
 ActiveSupport::Dependencies.autoload_paths << path

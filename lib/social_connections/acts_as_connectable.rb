@@ -19,11 +19,11 @@ module SocialConnections
   module InstanceMethods
 
     def outgoing_social_connections
-      SocialConnection.where("source_id = ? and source_type = ?", self.id, self.class.name)
+      SocialConnection.where("source_id = ? and source_type = ?", self.id, self.class.base_class.name)
     end
 
     def incoming_social_connections
-      SocialConnection.where("target_id = ? and target_type = ?", self.id, self.class.name)
+      SocialConnection.where("target_id = ? and target_type = ?", self.id, self.class.base_class.name)
     end
 
     def connect_to(other)
@@ -37,7 +37,7 @@ module SocialConnections
 
     def connected_to?(other)
       SocialConnection.where("source_id = ? and source_type = ? and target_id = ? and target_type = ?",
-                             self.id, self.class.name, other.id, other.class.name).exists?
+                             self.id, self.class.base_class.name, other.id, other.class.base_class.name).exists?
     end
 
     def acts_as_connectable_verbs

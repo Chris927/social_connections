@@ -18,9 +18,11 @@ class SocialActivity < ActiveRecord::Base
   end
 
   scope :by_subject, lambda {|subject| where("subject_id = ? and subject_type = ?",
-                                             subject.id, subject.class.name)}
+                                             subject.id, subject.class.base_class.name)}
   scope :by_owner, lambda {|owner| where("owner_id = ? and owner_type = ?",
-                                         owner.id, owner.class.name)}
+                                         owner.id, owner.class.base_class.name)}
+  scope :by_target, lambda {|target| where("target_id = ? and target_type = ?",
+                                         target.id, target.class.base_class.name)}
 
   def self.create_activities(subject, verb, object, options = {})
     # TODO: we may want to delay this

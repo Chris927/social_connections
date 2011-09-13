@@ -18,9 +18,11 @@ end
   ActiveSupport::Dependencies.autoload_once_paths.delete(path)
 end
 
-module SocialConnections
-  class Engine < Rails::Engine
-    paths["app/views"] = "lib/app/views"
+unless ENV['TEST'] == 'TRUE'
+  module SocialConnections
+    class Engine < Rails::Engine
+      paths["app/views"] = "lib/app/views"
+    end
   end
 end
 

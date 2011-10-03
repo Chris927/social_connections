@@ -70,6 +70,7 @@ module SocialConnections
     private
 
     def create_activity(verb, object, options = {})
+      raise ArgumentError.new("object is not a connectable: #{object}") unless object.respond_to? :acts_as_connectable_verbs
       SocialActivity.create_activities(self, verb, object, options)
     end
 

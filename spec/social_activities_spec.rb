@@ -22,6 +22,12 @@ describe "Social Activities" do
       lambda { @sub.suggests(@obj) }.should raise_error
     end
 
+    it "fails gracefully if object is not a connectable" do
+      expect {
+        @sub.likes(Object.new)
+      }.to raise_error(ArgumentError, /not a connectable/)
+    end
+
     it "know if subject/verb/object occured before" do
       @sub.likes @obj
       @sub.likes?(@obj).should be_true

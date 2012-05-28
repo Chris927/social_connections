@@ -13,7 +13,7 @@ describe "Social Activities" do
       activities = @sub.likes(@obj) # what about the 'owner'? everybody 'connected' to the subject *and*
       # the object becomes an owner!
       activities.should_not be_nil
-      activities[0].verb.should eql(:likes) 
+      activities[0].verb.should eql(:likes)
     end
 
     it "allow the verbs given, but no other verbs" do
@@ -79,6 +79,12 @@ describe "Social Activities" do
     mary.connect_to(@sub) # mary is now connected to Tim
     activities = @sub.likes(@obj)
     activities.select {|a| a.owner == mary}.should_not be_empty # Mary gets an activity, because she's connected to Tim
+  end
+
+  it "creates activities for 'additional_recipients'" do
+    mary = Connectable.create(:name => 'Mary')
+    activities = @sub.likes(@obj, :additional_recipients => [ mary ])
+    activities.select {|a| a.owner == mary }.should_not be_empty # Mary gets an activity, because she's in 'addition_recipients'
   end
 
   it "do *not* create activities for those the subject is connected to" do

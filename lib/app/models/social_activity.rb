@@ -28,7 +28,7 @@ class SocialActivity < ActiveRecord::Base
     # TODO: we may want to delay this
     activities = []
     owners = [ subject, object ]
-    owners.merge!(options[:additional_recipients]) if options[:additional_recipients]
+    owners.concat(options[:additional_recipients]) if options[:additional_recipients]
     owners.uniq.each do |owner|
       activities << SocialActivity.create(:owner => owner,
                                           :subject => subject,

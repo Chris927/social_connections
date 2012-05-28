@@ -1,4 +1,0 @@
-sqlite3:
-  :adapter: sqlite3
-  # :dbfile: vendor/plugins/social_connections/test/social_connections_plugin.sqlite3.db
-  :database: db/social_connections_plugin.sqlite3

@@ -64,7 +64,7 @@ is the subject and book `b` is the object. A user `v` can connect to user `u` by
 
 	v.connect_to(u)
 
-. If this is issued before invoking `likes` and `comments` as above, user `v` 
+. If this is issued before invoking `likes` and `comments` as above, user `v`
 receives 2 activities.
 
 These activities can be queried:
@@ -103,7 +103,7 @@ The view (e.g. `app/views/books/show.html.erb`) may then contain the following '
 Views
 -----
 
-A list of social activities can be rendered by 
+A list of social activities can be rendered by
 
 	<%= render @social_activities %>
 
@@ -134,12 +134,8 @@ For this, provide a partial at 'app/views/social_activities/_user_comments_user.
 How to run the Tests (in the gem itself, not in your Rails app)
 --------------------
 
-Run test in ./test:
-
-	rake
-
 Run specs in ./spec:
 
-	rspec spec
+	rspec --color spec
 
-Copyright (c) 2011 Chris Oloff, released under the MIT license
+Copyright (c) 2011, 2012 Chris Oloff, released under the MIT license

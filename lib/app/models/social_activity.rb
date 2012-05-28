@@ -27,7 +27,9 @@ class SocialActivity < ActiveRecord::Base
   def self.create_activities(subject, verb, object, options = {})
     # TODO: we may want to delay this
     activities = []
-    [ subject, object ].uniq.each do |owner| # one activity for the subject, and one for the object
+    owners = [ subject, object ]
+    owners.merge!(options[:additional_recipients]) if options[:additional_recipients]
+    owners.uniq.each do |owner|
       activities << SocialActivity.create(:owner => owner,
                                           :subject => subject,
                                           :verb => verb,
@@ -47,7 +49,7 @@ class SocialActivity < ActiveRecord::Base
                                           :options_as_json => options.to_json)
     end
     activities
-  end 
+  end
 
   def self.unseen_activities(for_whom)
     SocialActivity.where('owner_id = ? and owner_type = ? and unseen = ?',

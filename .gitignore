@@ -5,5 +5,6 @@ db/social_connections_plugin.sqlite3
 test/debug.log
 tmp/
 .*.swp
+.*.swo
 social_connections*.gem
 .rvmrc

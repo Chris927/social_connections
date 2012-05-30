@@ -18,10 +18,14 @@ describe "acts_as_connectable" do
     @c1.connect_to(@c2)
     @c1.connected_to?(@c2).should be(true)
     @c1.outgoing_social_connections.count.should be(1)
+    SocialConnection.outgoing(@c1).count.should be(1)
     @c1.outgoing_social_connections[0].should be_kind_of(SocialConnection)
     @c1.incoming_social_connections.count.should be(0)
+    SocialConnection.incoming(@c1).count.should be(0)
     @c2.outgoing_social_connections.count.should be(0)
+    SocialConnection.outgoing(@c2).count.should be(0)
     @c2.incoming_social_connections.count.should be(1)
+    SocialConnection.incoming(@c2).count.should be(1)
     @c2.incoming_social_connections[0].should be_kind_of(SocialConnection)
   end
   it "allows removing connections" do

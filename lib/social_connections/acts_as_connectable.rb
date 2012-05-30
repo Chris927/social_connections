@@ -35,6 +35,13 @@ module SocialConnections
       c
     end
 
+    def disconnect_from(other)
+      raise ArgumentError.new("other cannot be nil") if other.nil?
+      c = SocialConnection.by_source_and_target(self, other).first
+      raise ArgumentError.new("cannot disconnect, connection doesn't exist. source=#{self}, target=#{other}") if c.nil?
+      c.destroy
+    end
+
     def connected_to?(other)
       SocialConnection.where("source_id = ? and source_type = ? and target_id = ? and target_type = ?",
                              self.id, self.class.base_class.name, other.id, other.class.base_class.name).exists?

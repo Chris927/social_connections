@@ -24,4 +24,10 @@ describe "acts_as_connectable" do
     @c2.incoming_social_connections.count.should be(1)
     @c2.incoming_social_connections[0].should be_kind_of(SocialConnection)
   end
+  it "allows removing connections" do
+    @c1.connect_to(@c2)
+    @c1.connected_to?(@c2).should be(true)
+    @c1.disconnect_from(@c2)
+    @c1.connected_to?(@c2).should be(false)
+  end
 end

@@ -106,6 +106,12 @@ describe "Social Activities" do
       activities.select{|a| a.owner == @c1.determine_additional_recipients[0] }.count.should eq(1)
       activities.select{|a| a.owner == @c1.determine_additional_recipients[1] }.count.should eq(1)
     end
+    it "ensures that only one activity is created for an 'owner' (?), even if contained in social connections *and* additional recipients list" do
+      @c1.determine_additional_recipients[0].connect_to(@c2)
+      @c1.determine_additional_recipients[0].connect_to(@c1)
+      activities = @c1.likes(@c2)
+      activities.select{|a| a.owner == @c1.determine_additional_recipients[0] }.count.should eq(1)
+    end
   end
 
   it "create activities for those connected to the subject" do

@@ -74,6 +74,15 @@ describe "Social Activities" do
     activities.select {|a| a.owner == @obj}.should_not be_empty # ... and one owned by the object
   end
 
+  describe "additional recipients" do
+    class ConnectableWithAdditionalRecipients < ActiveRecord::Base
+
+    end
+    it "queries additional_recipients of the subject" do
+      pending
+    end
+  end
+
   it "create activities for those connected to the subject" do
     mary = Connectable.create(:name => 'Mary')
     mary.connect_to(@sub) # mary is now connected to Tim

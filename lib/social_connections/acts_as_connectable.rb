@@ -60,6 +60,8 @@ module SocialConnections
         verb = name
         object = args[0]
         options = args[1] || {}
+        options[:additional_recipients] ||= []
+        options[:additional_recipients].concat(additional_recipients)
         create_activity(verb, object, options)
       elsif acts_as_connectable_verb_questions.include? name
         verb = name[0..-2]
@@ -79,6 +81,13 @@ module SocialConnections
     def create_activity(verb, object, options = {})
       raise ArgumentError.new("object is not a connectable: #{object}") unless object.respond_to? :acts_as_connectable_verbs
       SocialActivity.create_activities(self, verb, object, options)
+    end
+
+    def additional_recipients
+      additional_recipients = acts_as_connectable_options[:additional_recipients]
+      return [] unless additional_recipients
+      return self.send(additional_recipients) if self.respond_to?(additional_recipients)
+      return additional_recipients
     end
 
     def verbs

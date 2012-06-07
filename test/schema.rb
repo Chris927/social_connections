@@ -32,4 +32,8 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string :name
     t.string :email
   end
+  create_table :connectable_with_additional_recipients, :force => true do |t|
+    t.string :name
+    t.string :email
+  end
 end

@@ -75,11 +75,36 @@ describe "Social Activities" do
   end
 
   describe "additional recipients" do
+
     class ConnectableWithAdditionalRecipients < ActiveRecord::Base
+      acts_as_connectable :additional_recipients => :determine_additional_recipients
+
+      def initialize(params = {})
+        super(params)
+        @ar1 = Connectable.create(:name => "additional recipient 1")
+        @ar2 = Connectable.create(:name => "additional recipient 2")
+      end
+
+      def determine_additional_recipients
+        [ @ar1, @ar2 ]
+      end
 
     end
-    it "queries additional_recipients of the subject" do
-      pending
+    before(:each) do
+      @c1 = ConnectableWithAdditionalRecipients.create(:name => "Anne")
+      @c2 = Connectable.create(:name => "Bob")
+    end
+    it "queries additional_recipients of the subject and sends them activities" do
+      activities = @c1.likes(@c2)
+      # both 'additional recipients' get an activity
+      activities.select{|a| a.owner == @c1.determine_additional_recipients[0] }.count.should eq(1)
+      activities.select{|a| a.owner == @c1.determine_additional_recipients[1] }.count.should eq(1)
+    end
+    it "queries additional_recipients of the object and sends activities" do
+      activities = @c2.likes(@c1)
+      # both 'additional recipients' get an activity
+      activities.select{|a| a.owner == @c1.determine_additional_recipients[0] }.count.should eq(1)
+      activities.select{|a| a.owner == @c1.determine_additional_recipients[1] }.count.should eq(1)
     end
   end
 

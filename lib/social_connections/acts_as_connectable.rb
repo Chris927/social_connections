@@ -10,9 +10,11 @@ module SocialConnections
     # * :verbs - specify a list of constants recognized as verbs.
     #   If none given, :likes is the only default verb.
     def acts_as_connectable(options = {})
-      cattr_accessor :acts_as_connectable_options
-      send :acts_as_connectable_options=, options
+      @options = options
       send :include, InstanceMethods
+    end
+    def acts_as_connectable_options
+      @options
     end
   end
 
@@ -47,6 +49,10 @@ module SocialConnections
                              self.id, self.class.base_class.name, other.id, other.class.base_class.name).exists?
     end
 
+    def acts_as_connectable_options
+      self.class.acts_as_connectable_options
+    end
+
     def acts_as_connectable_verbs
       acts_as_connectable_options[:verbs] || [ :likes ]
     end
@@ -57,11 +63,17 @@ module SocialConnections
 
     def method_missing(name, *args)
       if acts_as_connectable_verbs.include? name
+
         verb = name
         object = args[0]
         options = args[1] || {}
+
+        # both the subject (us) and the object may have additional recipients,
+        # we add them here
         options[:additional_recipients] ||= []
         options[:additional_recipients].concat(additional_recipients)
+        options[:additional_recipients].concat(object.send(:additional_recipients)) if object.respond_to?( :additional_recipients, true )
+
         create_activity(verb, object, options)
       elsif acts_as_connectable_verb_questions.include? name
         verb = name[0..-2]

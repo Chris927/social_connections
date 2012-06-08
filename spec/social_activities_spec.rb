@@ -93,6 +93,7 @@ describe "Social Activities" do
     before(:each) do
       @c1 = ConnectableWithAdditionalRecipients.create(:name => "Anne")
       @c2 = Connectable.create(:name => "Bob")
+      @ar3 = Connectable.create(:name => "additional recipient 3")
     end
     it "queries additional_recipients of the subject and sends them activities" do
       activities = @c1.likes(@c2)
@@ -111,6 +112,10 @@ describe "Social Activities" do
       @c1.determine_additional_recipients[0].connect_to(@c1)
       activities = @c1.likes(@c2)
       activities.select{|a| a.owner == @c1.determine_additional_recipients[0] }.count.should eq(1)
+    end
+    it "allows, in addition, to use an option when using the verb" do
+      activities = @c2.likes(@c1, :additional_recipients => [ @ar3 ])
+      activities.select {|a| puts "owner: #{a.owner}"; a.owner == @ar3 }.count.should eq(1)
     end
   end
 

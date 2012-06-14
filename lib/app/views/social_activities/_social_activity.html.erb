@@ -1,4 +1,3 @@
-<li>
 <% if social_activity.options['template'].blank? %>
   <div class="social-activity">
     <% if social_activity.subject.nil? %>
@@ -21,4 +20,3 @@
   <%= render :partial => social_activity.options['template'],
     :locals => { :social_activity => social_activity } %>
 <% end %>
-</li>
